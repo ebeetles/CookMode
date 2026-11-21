@@ -12,7 +12,7 @@ The cook mode screen is the one that helps the user cook. One step at a time is 
 
 ## Demo
 
-- Video: <!-- YouTube / Google Drive link, viewable by anyone with the link -->
+- Video: (https://youtube.com/shorts/xjZLiOJM-aw?feature=share)
 
 ## Setup and running
 
