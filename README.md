@@ -1,56 +1,63 @@
-# Welcome to your Expo app 👋
+# Cook Mode
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Cook Mode is a cooking instruction app that tracks your recipes and instructs you step by step during the cooking process, including inline timers for tasks that need it, as well as nudge your phone to go to the next step without having to touch your phone screen for if your hands are occupied or dirty during the cooking process. It also keeps your phone awake so you don't have to keep having it fall asleep and you having to unlock it over and over again. This app will be useful for people learning to cook.
 
-## Get started
+## Screens
 
-1. Install dependencies
+The recipe list screen lists all your recipes, and users can choose a recipe to start cooking with or add new recipes
 
-   ```bash
-   npm install
-   ```
+The add recipe screen allows users to add recipes, including the title, the ingredients required (one ingredient for each line) as well as the steps required to cook this recipe.
 
-2. Start the app
+The cook mode screen is the one that helps the user cook. One step at a time is displayed on the screen and also displays timers for steps that require a timer. The user can choose to nudge the phone if their hands are occupied or tap the screen to move on to the next step until the recipe is finished.
 
-   ```bash
-   npx expo start
-   ```
+## Demo
 
-In the output, you'll find options to open the app in a
+- Video: <!-- YouTube / Google Drive link, viewable by anyone with the link -->
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Setup and running
 
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+**Expo SDK:** "~58.0.26"
+**Device:** iPhone 17
 
-## Get a fresh project
+### Requirements
 
-When you're ready, run:
+- Node.js 22.13 or newer (`node --version` to check)
+- A free Expo account at [expo.dev](https://expo.dev)
+- The Expo Go app on your phone ([iOS](https://apps.apple.com/app/expo-go/id982107779) / [Android](https://play.google.com/store/apps/details?id=host.exp.exponent)), signed into the same Expo account you'll use on your computer
+
+### Run it
 
 ```bash
-npm run reset-project
+git clone <!-- your repo URL -->
+cd <!-- repo folder name -->
+npm install
+npx expo login        # same account as Expo Go on your phone
+npx expo start
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+Then scan the QR code in the terminal: on iPhone with the built-in Camera app, on Android from inside Expo Go. Your phone and computer need to be on the same Wi-Fi network. If the QR code scans but nothing loads, restart with tunnel mode:
 
-### Other setup steps
+```bash
+npx expo start --tunnel
+```
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+If the app is already open and doesn't pick up a change, press `r` in the terminal to reload.
 
-## Learn more
+### Notes for testing
 
-To learn more about developing your project with Expo, look at the following resources:
+- **Use a real phone.** Nudge-to-advance reads the accelerometer, which simulators don't provide real data for. Everything else works in a simulator, but nudging won't.
+- **Nudge sensitivity** is set in `src/constants/nudge.ts` (bump threshold, flat check, cooldown, touch suppression). Those values were tuned on <!-- your counter/phone; adjust after testing -->.
+- **Keep-awake:** <!-- fill in after testing: does Expo Go keep the screen on for every screen in development? If yes, note that AC 17 was verified in code (useKeepAwake only in src/app/cook/[id].tsx) instead of on-device. -->
+- **Read aloud:** <!-- fill in after testing: does speech play with the iPhone silent switch on? If not, say "turn off silent mode to hear steps read aloud." Delete this bullet if you're on Android and it works. -->
+- **Resetting to first-launch state** (to see the seeded recipes again): on Android, Settings → Apps → Expo Go → Clear storage. On iPhone, delete and reinstall Expo Go, then sign back in.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## How this was built
 
-## Join the community
+- [`SPEC.md`](SPEC.md): the specification, written before any code existed.
+- The app was built by an AI agent from that spec in one pass (commit: "Raw agentic build output"), then reviewed against the spec by a separate agent with no access to the build conversation.
+- [`REVIEW.md`](REVIEW.md): that review, unedited.
+- [`prompt_log.md`](prompt_log.md): the AI tools used and the key prompts, verbatim.
 
-Join our community of developers creating universal apps.
+## What surprised me about mobile development
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Something that I learned about mobile development is how much you can do with it beyond a webapp in the physical space just because of having your phone as the device. I was able to get nudging interactions where you can just nudge your phone and it can receive that signal and do something and I think that's just really cool.
